@@ -1,0 +1,10 @@
+{
+    "students": [
+      { "id": 1, "name": "Nguyen Van A", "address": "TPHCM" },
+      { "id": 1, "name": "Ngo Thanh tien", "address": "Tay Ninh" },
+      { "id": 1, "name": "Tran Vu Kha", "address": "Ca Mau" },
+      { "id": 1, "name": "Le Vi", "address": "Da Nang" },
+      { "id": 1, "name": "Nguyen Thi Thanh", "address": "Vung Tau" },
+      { "id": 1, "name": "Tran Van Tri", "address": "Ha Noi" }
+    ]
+}

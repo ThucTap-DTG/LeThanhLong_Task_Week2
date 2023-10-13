@@ -1,45 +1,39 @@
-import { useEffect, useState } from "react";
-import  React, {Component} from 'react';
+// import { useEffect, useState } from "react";
+import  React, {Component, useEffect, useState, FormEvent } from 'react';
 import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 
 
-function LoginForm() {
+export function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     // Xử lý logic đăng nhập
-//     console.log('Username:', username);
-//     console.log('Password:', password);
-//     // Reset form sau khi xử lý
-//     setUsername('');
-//     setPassword('');
-//   };
+  const Login = () => {
 
-  return (
-    <form>
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
+  }
+
+  return(
+    <div className="container">
+    <div className="row justify-content-center">
+      <div className="col-md-6">
+        <h2>Login</h2>
+        <form onClick={Login}>
+          <div className="form-group">
+            <label>Username</label>
+            <input type="text" className="form-control"
+             id="username" placeholder="Enter your username"/>
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" className="form-control"
+             id="password" placeholder="Enter your password"/>
+          </div><br />
+          <button type="submit" className="btn btn-primary">Login</button>
+        </form>
       </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
+  </div>
   );
 }
 

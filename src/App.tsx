@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {LoginForm} from './components/LoginForm';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LoginForm from './components/LoginForm';
+import Post from './components/Post';
 
 function App() {
   return (
-    <div>
-      <LoginForm />
+    <div>      
+      <Post/>
     </div>
   );
 }
