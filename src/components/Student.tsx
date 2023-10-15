@@ -26,8 +26,8 @@ const GetStudents = () => {
 
   const fetchData = async () => {
     try{
-      const res = await axios.get('http://localhost:3030/students');
-      setdata(res.data);
+      const res = await axios.get('http://localhost:3030/students')
+      .then(res => setdata(res.data));
     }
     catch(error){
       console.log(error);
@@ -46,43 +46,12 @@ const GetStudents = () => {
   };
 
   //===================================================================================
-//React.FormEvent<HTMLFormElement>
-  const handleSubmit = async () => {  
-    const newStudent = {name, address};
-    try {
-
-      axios.post('http://localhost:3030/students', newStudent);
-
-    } catch (error) {
-      console.error('Error adding post:', error);
-    }
-  };
 
   //====================================================================================
   return (
     <div className='container'>
-      <form onClick= {handleSubmit} className='d-flex w-100 vh-100 justify-content-center
-      align-items-center' style={{width: 300}}>
-      <div className='w-50 border bg-light p-5'>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text" id="name" value={name} className='form-control'
-            onChange={(e) => setName(e.target.value)}
-            />
-        </div>
-        <div>
-          <label htmlFor="name">Address:</label>
-          <input
-            type="text" id="address" value={address} className='form-control'
-            onChange={(e) => setAddress(e.target.value)}
-            />
-        </div><br />
-        <button type="submit" className='btn btn-primary'>Add</button>
-      </div>
-    </form>
-
         <h2>Students List</h2>
+        <a href="/create" className='btn btn-success'>Add</a>
         <table className='table'>
       <thead>
         <tr>      

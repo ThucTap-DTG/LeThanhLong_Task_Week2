@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginForm from './components/LoginForm';
 import Student from './components/Student';
 import { BrowserRouter as Router, Route, BrowserRouter, Routes, Link } from 'react-router-dom';
+import Create from './components/Create';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginForm/>} />
           <Route path="/student" element={<Student/>} />
+          <Route path="/create" element={<Create/>} />
         </Routes>
       </div>
     </Router>
