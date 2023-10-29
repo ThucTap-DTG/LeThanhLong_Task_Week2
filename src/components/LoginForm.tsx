@@ -13,17 +13,24 @@ export function LoginForm() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    
+    checkLogin();
   }, []);
 
-  const Login = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const username1 = localStorage.getItem('username');
-    const password1 = localStorage.getItem('password');
-    if(username1 === 'admin' && password1 === 'admin'){
-      navigate('/student');
+  const checkLogin = async () => {
+    try {
+      const status = await localStorage.getItem("username");
+      if (status) {
+        navigate('/student');
+      }
+    } catch (error) {
+      console.error("Lỗi: ", error);
     }
-    else if (username === 'admin' && password === 'admin') {
+  };
+
+
+  const Login = (e: React.FormEvent<HTMLFormElement>) => {
+
+    if (username === 'admin' && password === 'admin') {
       // Save login status to local storage
       localStorage.setItem('username', username);
       localStorage.setItem('password', password);

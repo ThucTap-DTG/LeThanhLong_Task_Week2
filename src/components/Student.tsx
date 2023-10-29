@@ -14,20 +14,26 @@ interface Student{
 
 const GetStudents = () => {
     const [data, setdata] = useState<Array<Student>>([]);
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [student, setStudent] = useState('');
+    const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+    const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    filterStudents(searchText);
+  }, [searchText]);
 //================================GetPost=============================================
 
   const fetchData = async () => {
     try{
-      const res = await axios.get('http://localhost:3030/students')
-      .then(res => setdata(res.data));
+      // const res = await axios.get('http://localhost:3030/students')
+      // .then(res => setdata(res.data));
+      const response = await fetch('http://localhost:3030/students');
+      const data = await response.json();
+      setdata(data);
+      setFilteredStudents(data);
     }
     catch(error){
       console.log(error);
@@ -46,12 +52,37 @@ const GetStudents = () => {
   };
 
   //===================================================================================
+  const filterStudents = (searchText: string) => {
+    if (searchText.trim() === '') {
+      setFilteredStudents(data);
+    } else {
+      const filtered = data.filter(
+        (student) =>
+          student.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          student.address.toLowerCase().includes(searchText.toLowerCase()) ||
+          student.id.toString().includes(searchText.toLowerCase())
+      );
+      setFilteredStudents(filtered);
+    }
+  };
 
+  // useEffect(() => {
+  //   filterStudents();
+  // }, [searchText]);
+
+  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchText = event.target.value;
+    setSearchText(searchText);
+    filterStudents(searchText);
+  };
   //====================================================================================
   return (
     <div className='container'>
         <h2>Students List</h2>
-        <a href="/create" className='btn btn-success'>Add</a>
+        <a href="/create" className='btn btn-success'>Add</a> <br /><br />
+        <input type="text" value={searchText}
+        onChange={handleSearchInputChange}
+        placeholder="Search" className='form-control'/>
         <table className='table'>
       <thead>
         <tr>      
@@ -59,9 +90,9 @@ const GetStudents = () => {
           <th>Name</th>
           <th>Address</th>
         </tr>
-      </thead>
+      </thead>  
       <tbody>
-        {data.map((item) => (
+        {filteredStudents.map((item) => (
           <tr key={item.id}>           
             <td>{item.id}</td>
             <td>{item.name}</td>

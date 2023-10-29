@@ -20,7 +20,7 @@ function Create(){
 
     return(
         <div className='container'>
-            <form onClick= {handleSubmit}  style={{width: 300}}
+            <form onSubmit={handleSubmit} style={{width: 300}}
             className='d-flex w-100 vh-100 justify-content-center align-items-center'>
                 <div className='w-50 border bg-light p-5'>
                     <div>
@@ -40,7 +40,7 @@ function Create(){
                     <button className='btn btn-primary'>Add</button>
                 </div>
                 </form>
-        </div>
+        </div> 
     )
 }
 
