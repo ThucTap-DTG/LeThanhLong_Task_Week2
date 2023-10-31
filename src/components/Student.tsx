@@ -1,10 +1,12 @@
-import  React, {Component, useEffect, useState, ChangeEvent, FormEvent} from 'react';
+import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import axios from 'axios';
 import { error } from 'console';
 import { title } from 'process';
+import StudentInfo from './StudentInfo';
+import CreateProps from './CreateProps';
 
 interface Student{
     id: number;
@@ -12,10 +14,15 @@ interface Student{
     address: string;
 }
 
+
 const GetStudents = () => {
+    const temp = 'Hello Long';
+    const TestContext = createContext(null);
     const [data, setdata] = useState<Array<Student>>([]);
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
+
+    const [editStudent, seteditStudent] = useState<Student | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -79,10 +86,13 @@ const GetStudents = () => {
   return (
     <div className='container'>
         <h2>Students List</h2>
-        <a href="/create" className='btn btn-success'>Add</a> <br /><br />
+        {/* <a href="/create" className='btn btn-success'>Add</a> <br /><br /> */}
+        <TestContext.Provider value={{temp: String}}>
+        <CreateProps />
+        </TestContext.Provider>
         <input type="text" value={searchText}
         onChange={handleSearchInputChange}
-        placeholder="Search" className='form-control'/>
+        placeholder="Search" className='form-control'/> <br />
         <table className='table'>
       <thead>
         <tr>      
@@ -92,14 +102,9 @@ const GetStudents = () => {
         </tr>
       </thead>  
       <tbody>
-        {filteredStudents.map((item) => (
-          <tr key={item.id}>           
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.address}</td>
-            <td><button type='submit' onClick={()=>handleDelete(item.id)} 
-            className='btn btn-danger'>Xóa</button></td>
-          </tr>
+        {filteredStudents.map((student) => (
+           <StudentInfo key={student.id} id = {student.id} name = {student.name} 
+           address = {student.address} onDelete={() => {handleDelete(student.id)}}/>          
         ))}
       </tbody>
     </table>

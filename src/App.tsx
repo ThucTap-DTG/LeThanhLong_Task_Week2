@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm';
 import Student from './components/Student';
 import { BrowserRouter as Router, Route, BrowserRouter, Routes, Link } from 'react-router-dom';
 import Create from './components/Create';
+import Update from './components/Update';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<LoginForm/>} />
           <Route path="/student" element={<Student/>} />
           <Route path="/create" element={<Create/>} />
+          <Route path="/update" element={<Update/>} />
         </Routes>
       </div>
     </Router>
