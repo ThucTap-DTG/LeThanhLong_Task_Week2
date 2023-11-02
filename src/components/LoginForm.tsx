@@ -1,16 +1,22 @@
 // import { useEffect, useState } from "react";
-import  React, {Component, useEffect, useState, FormEvent } from 'react';
+import  React, {Component, useEffect, useState, FormEvent, createContext, Children, useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
-import { useNavigate  } from 'react-router-dom';
-
+import { useNavigate  } from 'react-router-dom'; 
+import EditAccount from './edit-user';
+import {AccountContext, AccountProvider, useAcc} from '../context/UserContext';
+import { User } from '../type/User';
 
 export function LoginForm() {
   const navigate = useNavigate ();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  // const account = useContext(AccountContext);
+  //const [acc, setAcc] = useState('');
+  const {acc, setAcc} = useAcc();
+
 
   useEffect(() => {
     checkLogin();
@@ -18,7 +24,7 @@ export function LoginForm() {
 
   const checkLogin = async () => {
     try {
-      const status = await localStorage.getItem("username");
+      const status = await localStorage.getItem("MatKhau");
       if (status) {
         navigate('/student');
       }
@@ -26,16 +32,31 @@ export function LoginForm() {
       console.error("Lỗi: ", error);
     }
   };
-
-
+  
+//   const Account = {
+//     username: 'admin',
+//     password: '123',
+//     address: 'Cà Mau',
+//     phone: '0312546984',
+//     email: 'admin@gmail.com',
+// };
+const account: User = {
+  username: 'admin',
+  password: '123',
+  address: 'Cà Mau',
+  phone: '0312546984',
+  email: 'admin@gmail.com',
+};
   const Login = (e: React.FormEvent<HTMLFormElement>) => {
-
-    if (username === 'admin' && password === 'admin') {
-      // Save login status to local storage
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
-
+    
+    if (username === account.username && password === account.password) {
+      // Save loaccountgin status to local storage
+      localStorage.setItem('TenDangNhap', username);
+      localStorage.setItem('MatKhau', password);
       // Redirect to the home page
+
+      setAcc(account);
+      
       navigate('/student');
     } else {
       setError('Invalid username or password');
@@ -43,6 +64,7 @@ export function LoginForm() {
   };
 
   return(
+    
     <div className="container">
     <div className="row justify-content-center">
       <div className="col-md-6">

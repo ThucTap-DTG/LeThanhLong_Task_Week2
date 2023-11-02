@@ -16,8 +16,6 @@ interface Student{
 
 
 const GetStudents = () => {
-    const temp = 'Hello Long';
-    const TestContext = createContext(null);
     const [data, setdata] = useState<Array<Student>>([]);
     const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
@@ -52,6 +50,7 @@ const GetStudents = () => {
     try {
       await axios.delete(`http://localhost:3030/students/${id}`);
       setdata(data.filter((post) => post.id !== id));
+      alert("Data delete Successfully!")
     } catch (error) {
       // Xử lý lỗi (nếu có)
       console.log(error);
@@ -87,9 +86,7 @@ const GetStudents = () => {
     <div className='container'>
         <h2>Students List</h2>
         {/* <a href="/create" className='btn btn-success'>Add</a> <br /><br /> */}
-        <TestContext.Provider value={{temp: String}}>
-        <CreateProps />
-        </TestContext.Provider>
+        <CreateProps />       
         <input type="text" value={searchText}
         onChange={handleSearchInputChange}
         placeholder="Search" className='form-control'/> <br />
