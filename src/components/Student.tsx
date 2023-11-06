@@ -7,6 +7,10 @@ import { error } from 'console';
 import { title } from 'process';
 import StudentInfo from './StudentInfo';
 import CreateProps from './CreateProps';
+import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import '../App.css';
 
 interface Student{
     id: number;
@@ -83,21 +87,28 @@ const GetStudents = () => {
   };
   //====================================================================================
   return (
-    <div className='container'>
-        <h2>Students List</h2>
-        {/* <a href="/create" className='btn btn-success'>Add</a> <br /><br /> */}
-        <CreateProps />       
-        <input type="text" value={searchText}
-        onChange={handleSearchInputChange}
-        placeholder="Search" className='form-control'/> <br />
-        <table className='table'>
-      <thead>
-        <tr>      
-          <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
-        </tr>
-      </thead>  
+    <div className='container list-student bg-light ' style={{marginTop: 15, borderRadius: 10}}>
+      <br /> 
+      <div className='row'>
+          <div className='col-md-2'><CreateProps /></div>
+          <div className='col-md-3'>
+          <input type="text" value={searchText}
+          onChange={handleSearchInputChange}
+          placeholder="Search" className='form-control' style={{width: 300}}/> <br />
+          
+          </div>
+      </div>      
+       
+        <table className='table table-striped table-hover'>
+        <thead>
+          <tr>      
+            <th>MSSV</th>
+            <th>Họ và Tên</th>
+            <th>Đại chỉ</th>
+            <th>Hành động</th>
+            
+          </tr>
+        </thead>  
       <tbody>
         {filteredStudents.map((student) => (
            <StudentInfo key={student.id} id = {student.id} name = {student.name} 

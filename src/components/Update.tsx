@@ -4,7 +4,9 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios';                                                                                          
+import axios from 'axios';    
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';                                                                                      
 
 interface Student{
     id: number;
@@ -34,25 +36,28 @@ function Update(){
     }
 
     return(
-        <div className='container'>
+        <div className='container-update'>
+            <br />
             <form onSubmit={handleSubmit} style={{width: 300}}
-            className='d-flex w-100 vh-100 justify-content-center align-items-center'>
-                <div className='w-50 border bg-light p-5'>
+            className='d-flex w-100 vh-0 justify-content-center align-items-center'>
+                <div className='w-50 border form-update p-5' style={{borderRadius: 5}}>
                     <div>
-                        <label htmlFor="name">Name:</label>
+                        <label htmlFor="name" style={{fontWeight: 'bold'}}>Name:</label>
                         <input
                             type="text" id="name" className='form-control' value={inputData.name}
                             onChange={e => setInputData({...inputData, name: e.target.value})}
                             />
                     </div>
                     <div>
-                        <label htmlFor="name">Address:</label>
+                        <label htmlFor="name" style={{fontWeight: 'bold'}}>Address:</label>
                         <input
                             type="text" id="address" className='form-control' value={inputData.address}
                             onChange={e => setInputData({...inputData, address: e.target.value})}
                             />
                     </div><br />
-                    <button className='btn btn-primary'>Save</button>
+                    <button className='btn btn-primary'>
+                        <FontAwesomeIcon icon={faFloppyDisk} /> Save
+                    </button>
                 </div>
                 </form>
         </div> 
