@@ -3,7 +3,9 @@ import  React, {Component, useEffect, useState, ChangeEvent, FormEvent} from 're
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
-import axios from 'axios';                                                                                          
+import axios from 'axios';  
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';                                                                                       
 
 function Create(){
     const [inputData, setInputData] = useState({name: '', address: ''})
@@ -20,9 +22,10 @@ function Create(){
 
     return(
         <div className='container'>
+            <br />
             <form onSubmit={handleSubmit} style={{width: 300}}
-            className='d-flex w-100 vh-100 justify-content-center align-items-center'>
-                <div className='w-50 border bg-light p-5'>
+            className='d-flex w-100 vh-0 justify-content-center align-items-center'>
+                <div className='w-50 border bg-light p-5' style={{borderRadius: 5}}>
                     <div>
                         <label htmlFor="name">Name:</label>
                         <input
@@ -37,7 +40,9 @@ function Create(){
                             onChange={e => setInputData({...inputData, address: e.target.value})}
                             />
                     </div><br />
-                    <button className='btn btn-primary'>Add</button>
+                    <button className='btn btn-primary'>
+                        <FontAwesomeIcon icon={faFloppyDisk} /> Save
+                    </button>
                 </div>
                 </form>
         </div> 

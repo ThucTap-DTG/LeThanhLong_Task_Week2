@@ -64,11 +64,9 @@ const account: User = {
   };
 
   return(
-    
-    <div className="container">
-    <div className="row justify-content-center">
-      <div className="col-md-6">
-        <h2>Login</h2>
+    <div className='container'> 
+    <br />
+    <div className="login-form">
         <form onClick={Login}>
           <div className="form-group">
             <label>Username</label>
@@ -82,10 +80,9 @@ const account: User = {
              id="password" placeholder="Enter your password"
              onChange={(e) => setPassword(e.target.value)}/>
           </div><br />
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="btn btn-primary btn-login">Login</button>
         </form>
-      </div>
-    </div>
+  </div>
   </div>
   );
 }

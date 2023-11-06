@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate  } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee, faPenSquare, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 interface StudentInfoProps {
   id: number;
@@ -24,12 +27,13 @@ function StudentInfo(student: StudentInfoProps) {
         <td>{student.name}</td>
         <td>{student.address}</td>   
         <td>
-            <button type='submit' onClick={student.onDelete} className='btn btn-danger'>Delete</button>
-        </td>
-        <td>
-            <button  onClick={NavUpdate} className='btn btn-info'>Update</button>
-        </td>
-
+            <button type='submit' onClick={student.onDelete} className='btn btn-danger' style={{marginRight: 5}}>
+            <FontAwesomeIcon icon={faTrash} /> 
+            </button>
+            <button  onClick={NavUpdate} className='btn btn-info'>
+            <FontAwesomeIcon icon={faPenSquare} /> 
+            </button>
+        </td>    
     </tr>
   );
 };
