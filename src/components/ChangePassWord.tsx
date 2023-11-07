@@ -33,21 +33,21 @@ function ChangePassWord(){
                     <div>
                         <label htmlFor="name">Old Password:</label>
                         <input
-                            type="password" id="name" className='form-control'
+                            type="password" id="name" className='form-control' placeholder='Enter old password'
                             onChange={(e) => setPwOld(e.target.value)}
                             />
                     </div>
                     <div>
                         <label htmlFor="name">New Password:</label>
                         <input
-                            type="password" id="address" className='form-control'
+                            type="password" id="address" className='form-control' placeholder='Enter new password'
                             onChange={(e) => setPwNew(e.target.value)}
                             />
                     </div>
                     <div>
                         <label htmlFor="name">Enter a new password:</label>
                         <input
-                            type="password" id="address" className='form-control'
+                            type="password" id="address" className='form-control' placeholder='Enter new password'
                             onChange={(e) => setPwNewEnter(e.target.value)}
                             />
                     </div><br />

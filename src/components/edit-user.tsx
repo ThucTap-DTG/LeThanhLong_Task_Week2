@@ -5,6 +5,7 @@ import { AccountContext, AccountProvider ,useAcc} from '../context/UserContext';
 import {User} from '../type/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faPenSquare, faPlus, faTrash , faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const EditAccount: React.FC = () => {
   const {acc, setAcc} = useAcc();
@@ -29,6 +30,12 @@ const EditAccount: React.FC = () => {
      localStorage.setItem('email', temp.email);
      alert('Update user Successfully!')
   }
+  const navigate = useNavigate();
+  useEffect(() =>{
+    if(localStorage.getItem('MatKhau') === null){
+      navigate('/');
+    }
+  }, [])
   return (
     <div className='container'>
       <br />

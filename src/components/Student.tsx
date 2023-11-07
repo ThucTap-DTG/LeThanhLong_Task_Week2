@@ -7,6 +7,7 @@ import { error } from 'console';
 import { title } from 'process';
 import StudentInfo from './StudentInfo';
 import CreateProps from './CreateProps';
+import { useNavigate } from 'react-router-dom';
 
 interface Student{
     id: number;
@@ -16,6 +17,7 @@ interface Student{
 
 
 const GetStudents = () => {
+  const navigate = useNavigate();
     const [data, setdata] = useState<Student[]>([]);
     //const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
@@ -59,20 +61,25 @@ const GetStudents = () => {
 
   //===================================================================================
   const filterStudents = async(searchText: string) => {
-    if (searchText.trim() === '') {
-        const res = await axios.get('http://localhost:3030/students')
-        .then(res => setdata(res.data));
-        const response = await fetch('http://localhost:3030/students');
-        const data = await response.json();
-        setdata(data);
-    } else {
-      const filtered = data.filter(
-        (student) =>
-          student.name.toLowerCase().includes(searchText.toLowerCase()) ||
-          student.address.toLowerCase().includes(searchText.toLowerCase()) ||
-          student.id.toString().includes(searchText.toLowerCase())
-      );
-      setdata(filtered);
+    if(localStorage.getItem('MatKhau') !== null){
+          if (searchText.trim() === '') {
+            const res = await axios.get('http://localhost:3030/students')
+            .then(res => setdata(res.data));
+            const response = await fetch('http://localhost:3030/students');
+            const data = await response.json();
+            setdata(data);
+        } else {
+          const filtered = data.filter(
+            (student) =>
+              student.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              student.address.toLowerCase().includes(searchText.toLowerCase()) ||
+              student.id.toString().includes(searchText.toLowerCase())
+          );
+          setdata(filtered);
+        }
+    }
+    else{
+      navigate('/');
     }
   };
 

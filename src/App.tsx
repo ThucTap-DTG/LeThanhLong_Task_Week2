@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -15,7 +15,59 @@ import Logout from './components/Logout';
 import { useNavigate  } from 'react-router-dom'; 
 import ChangePassWord from './components/ChangePassWord';
 
-function App() {
+
+
+const App = () => {
+  const status = localStorage.getItem("MatKhau");
+  // useEffect(() => {
+  //   checkLogin();
+  // }, [status])
+
+  const checkLogin = () =>{
+    const status = localStorage.getItem("MatKhau");
+    let message;
+    if (status !== null) {
+      message = 
+      <Dropdown>
+          <Dropdown.Toggle variant="seconnary" id="dropdown-basic">
+              <FontAwesomeIcon icon={faUser} /> 
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+      
+          <Dropdown.Item>
+            <Link to="/logout" style={{textDecoration: 'none', color: 'black'}}>
+              Đăng xuất
+            </Link>   
+                        
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/changepassword" style={{textDecoration: 'none', color: 'black'}}>
+              Đổi mật khẩu
+              </Link>
+            </Dropdown.Item>
+            </Dropdown.Menu>
+      </Dropdown>
+    }
+    else if(status === null || status === undefined){
+      message = 
+      <Dropdown>
+          <Dropdown.Toggle variant="seconnary" id="dropdown-basic">
+              <FontAwesomeIcon icon={faUser} /> 
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+      
+          <Dropdown.Item>
+            <Link to="/logout" style={{textDecoration: 'none', color: 'black'}}>
+              Đăng nhập
+            </Link>   
+                        
+            </Dropdown.Item>
+            </Dropdown.Menu>
+      </Dropdown>
+    }
+    return message;
+  };
+  const temp = checkLogin();
   return (
     <Router>
       <div>
@@ -38,12 +90,13 @@ function App() {
                     </Link> */}                             
                   </li>            
                 </ul>
-                <Dropdown>
+                {/* <Dropdown>
                   <Dropdown.Toggle variant="seconnary" id="dropdown-basic">
                   <FontAwesomeIcon icon={faUser} /> 
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
+
                     <Dropdown.Item>
                         <Link to="/" style={{textDecoration: 'none', color: 'black'}}>
                             Đăng nhập
@@ -61,7 +114,8 @@ function App() {
                         </Link>
                       </Dropdown.Item>
                   </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> */}
+                {temp}
               </div>
             </div>
           </nav>
