@@ -12,7 +12,8 @@ function CreateProps() {
     }
   return (
    <div>
-        <button onClick={NavCreate} className='btn btn-success'>Add</button> <br /><br />
+        <button onClick={NavCreate} className='btn btn-success'>
+           + Student</button> <br /><br />
    </div>
   );
 };

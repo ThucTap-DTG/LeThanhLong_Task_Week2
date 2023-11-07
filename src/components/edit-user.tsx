@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AccountContext, AccountProvider ,useAcc} from '../context/UserContext';
 import {User} from '../type/User';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee, faPenSquare, faPlus, faTrash , faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
 
 const EditAccount: React.FC = () => {
   const {acc, setAcc} = useAcc();
@@ -20,18 +22,20 @@ const EditAccount: React.FC = () => {
     // const objectString = JSON.stringify(ObjAccount);
     // localStorage.setItem('ObjAccount', objectString);
     // localStorage.removeItem('MatKhau');
-     localStorage.setItem('username', temp.username);
-     localStorage.setItem('password', temp.password);
+    //  localStorage.setItem('username', temp.username);
+    //  localStorage.setItem('password', temp.password);
      localStorage.setItem('address', temp.address);
      localStorage.setItem('phone', temp.phone);
      localStorage.setItem('email', temp.email);
+     alert('Update user Successfully!')
   }
   return (
     <div className='container'>
+      <br />
       <form onSubmit={hanldEdit} style={{width: 300}}
-      className='d-flex w-100 vh-100 justify-content-center align-items-center'>
-        <div className='w-50 border bg-light p-5'>
-        <div>
+      className='d-flex w-100 vh-0 justify-content-center align-items-center'>
+        <div className='w-50 border bg-light p-5' style={{borderRadius: 10}}>
+        {/* <div>
           <label>Username:</label>
           <input type="text" value={temp.username} readOnly
           onChange={e => setTemp({...temp, username: e.target.value})}
@@ -41,7 +45,7 @@ const EditAccount: React.FC = () => {
           <label>Password:</label>
           <input type="password" value={temp.password}  className='form-control'
           onChange={e => setTemp({...temp, password: e.target.value})}/>
-        </div>
+        </div> */}
         <div>
           <label>Address:</label>
           <input type="text" value={temp.address} className='form-control'
@@ -57,7 +61,9 @@ const EditAccount: React.FC = () => {
           <input type="text" value={temp.email} className='form-control'
           onChange={e => setTemp({...temp, email: e.target.value})}/>
         </div> <br />
-        <button type="submit" className='btn btn-primary'>Save</button>
+        <button className='btn btn-primary'>
+            <FontAwesomeIcon icon={faFloppyDisk} /> Save
+        </button>
         </div>
       </form>
     </div>

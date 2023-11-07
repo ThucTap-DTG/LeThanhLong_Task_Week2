@@ -1,11 +1,8 @@
-.form-add{
+.form-add {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-<<<<<<< Updated upstream
-}
-=======
 }
 
 .header-table{
@@ -111,4 +108,3 @@ input {
   border-radius: 3px;
   cursor: pointer;
 }
->>>>>>> Stashed changes

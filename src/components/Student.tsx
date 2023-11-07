@@ -16,34 +16,34 @@ interface Student{
 
 
 const GetStudents = () => {
-    const [data, setdata] = useState<Array<Student>>([]);
-    const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+    const [data, setdata] = useState<Student[]>([]);
+    //const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
 
     const [editStudent, seteditStudent] = useState<Student | null>(null);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     filterStudents(searchText);
   }, [searchText]);
 //================================GetPost=============================================
 
-  const fetchData = async () => {
-    try{
-      // const res = await axios.get('http://localhost:3030/students')
-      // .then(res => setdata(res.data));
-      const response = await fetch('http://localhost:3030/students');
-      const data = await response.json();
-      setdata(data);
-      setFilteredStudents(data);
-    }
-    catch(error){
-      console.log(error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try{
+  //     // const res = await axios.get('http://localhost:3030/students')
+  //     // .then(res => setdata(res.data));
+  //     const response = await fetch('http://localhost:3030/students');
+  //     const data = await response.json();
+  //     setdata(data);
+  //     setFilteredStudents(data);
+  //   }
+  //   catch(error){
+  //     console.log(error);
+  //   }
+  // };
   //===================================================================================
   //================================Delete=============================================
   const handleDelete = async(id: number) =>{
@@ -58,9 +58,13 @@ const GetStudents = () => {
   };
 
   //===================================================================================
-  const filterStudents = (searchText: string) => {
+  const filterStudents = async(searchText: string) => {
     if (searchText.trim() === '') {
-      setFilteredStudents(data);
+        const res = await axios.get('http://localhost:3030/students')
+        .then(res => setdata(res.data));
+        const response = await fetch('http://localhost:3030/students');
+        const data = await response.json();
+        setdata(data);
     } else {
       const filtered = data.filter(
         (student) =>
@@ -68,7 +72,7 @@ const GetStudents = () => {
           student.address.toLowerCase().includes(searchText.toLowerCase()) ||
           student.id.toString().includes(searchText.toLowerCase())
       );
-      setFilteredStudents(filtered);
+      setdata(filtered);
     }
   };
 
@@ -83,28 +87,34 @@ const GetStudents = () => {
   };
   //====================================================================================
   return (
-    <div className='container'>
-        <h2>Students List</h2>
+    <div className='container list-student' style={{boxShadow: '0 0 10px gray', marginTop: 10, borderRadius:10}}>
+      <br />
         {/* <a href="/create" className='btn btn-success'>Add</a> <br /><br /> */}
-        <CreateProps />       
-        <input type="text" value={searchText}
+        <div className='row'>
+            <div className='col-md-2'><CreateProps />  </div>
+            <div className='col-md-10'>
+            <input type="text" value={searchText}
         onChange={handleSearchInputChange}
-        placeholder="Search" className='form-control'/> <br />
-        <table className='table'>
+        placeholder="Search" className='form-control' style={{width: 300}}/> <br />
+            </div>
+        </div>             
+      <table className='table table-success table-striped'>
       <thead>
         <tr>      
-          <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
+          <th>MSSV</th>
+          <th>Họ và Tên</th>
+          <th>Đại chỉ</th>
+          <th>Hành động </th>
         </tr>
       </thead>  
       <tbody>
-        {filteredStudents.map((student) => (
+        {data.map((student) => (
            <StudentInfo key={student.id} id = {student.id} name = {student.name} 
            address = {student.address} onDelete={() => {handleDelete(student.id)}}/>          
         ))}
       </tbody>
     </table>
+    <br />
   </div>
   );
 };
