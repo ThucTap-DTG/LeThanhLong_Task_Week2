@@ -2,11 +2,11 @@
 import  React, {Component, useEffect, useState, FormEvent, createContext, Children, useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
+import '../../App.css';
 import { useNavigate  } from 'react-router-dom'; 
 import EditAccount from './edit-user';
-import {AccountContext, AccountProvider, useAcc} from '../context/UserContext';
-import { User } from '../type/User';
+import {AccountContext, AccountProvider, useAcc} from '../../context/UserContext';
+import { User } from '../../type/User';
 
 export function LoginForm() {
   const navigate = useNavigate ();

@@ -1,7 +1,7 @@
 import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
+import '../../App.css';
 import axios from 'axios';
 import { error } from 'console';
 import { title } from 'process';

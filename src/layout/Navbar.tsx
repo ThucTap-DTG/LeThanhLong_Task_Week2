@@ -4,7 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, BrowserRouter, Routes, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faPenSquare, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faPenSquare, faPlus, faTrash, faUser,
+       faGraduationCap, faBook, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate  } from 'react-router-dom'; 
 
 const Navbar = () => {
@@ -18,39 +19,43 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li>
-                <Link
-                  to="/student"
-                  className="nav-link active"
-                  aria-current="page"
-                >
-                  Student
-                </Link>
+              <Dropdown>
+                  <Dropdown.Toggle variant="seconnary" id="dropdown-basic" style={{color: 'white', fontWeight:'bold'}}>
+                  <FontAwesomeIcon icon={faBars} /> Category
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>     
+                    <Dropdown.Item>
+                    <Link to="/student" style={{textDecoration: 'none', color: 'black'}}>
+                    <FontAwesomeIcon icon={faGraduationCap} /> Students
+                    </Link>                                  
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to="/getsubject" style={{textDecoration: 'none', color: 'black'}}>
+                        <FontAwesomeIcon icon={faBook} /> Subjects
+                        </Link>
+                    </Dropdown.Item>                  
+                    </Dropdown.Menu>
+                </Dropdown>
               </li>
-              <li>
-                <Link
-                  to="/edit-user"
-                  className="nav-link active"
-                  aria-current="page"
-                >
-                  Edit User
-                </Link>
-              </li>
-              <li></li>
             </ul>
             <Dropdown>
-                  <Dropdown.Toggle variant="seconnary" id="dropdown-basic">
+                  <Dropdown.Toggle variant="seconnary" id="dropdown-basic" style={{color: 'white'}}>
                   <FontAwesomeIcon icon={faUser} /> 
                   </Dropdown.Toggle>
                   <Dropdown.Menu>     
                     <Dropdown.Item>
                     <Link to="/logout" style={{textDecoration: 'none', color: 'black'}}>
                         Đăng xuất
-                    </Link>   
-                                
+                    </Link>                                  
                     </Dropdown.Item>
                     <Dropdown.Item>
                         <Link to="/changepassword" style={{textDecoration: 'none', color: 'black'}}>
                         Đổi mật khẩu
+                        </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to="/edit-user" style={{textDecoration: 'none', color: 'black'}}>
+                        Edit User
                         </Link>
                     </Dropdown.Item>
                     </Dropdown.Menu>

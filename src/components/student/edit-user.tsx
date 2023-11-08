@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { AccountContext, AccountProvider ,useAcc} from '../context/UserContext';
-import {User} from '../type/User';
+import { AccountContext, AccountProvider ,useAcc} from '../../context/UserContext';
+import {User} from '../../type/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faPenSquare, faPlus, faTrash , faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';

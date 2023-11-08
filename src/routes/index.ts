@@ -1,10 +1,11 @@
-import Student from '../components/Student';
-import Create from '../components/Create';
-import Update from '../components/Update';
-import EditAccount from '../components/edit-user';
-import LoginForm from '../components/LoginForm';
-import ChangePassword from '../components/ChangePassWord';
-import Logout from '../components/Logout';
+import Student from '../components/student/Student';
+import Create from '../components/student/Create';
+import Update from '../components/student/Update';
+import EditAccount from '../components/student/edit-user';
+import LoginForm from '../components/student/LoginForm';
+import ChangePassword from '../components/student/ChangePassWord';
+import Logout from '../components/student/Logout';
+import GetSubject from '../components/subject/GetSubject';
 
 const publicRoutes = [
     {path: '/', component: LoginForm, layout: null},
@@ -13,6 +14,7 @@ const publicRoutes = [
     {path: '/update', component: Update},
     {path: '/edit-user', component: EditAccount},
     {path: '/changepassword', component: ChangePassword},
-    {path: '/logout', component: Logout}
+    {path: '/logout', component: Logout},
+    {path: '/getsubject', component: GetSubject}
 ];
 export {publicRoutes}

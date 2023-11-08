@@ -2,37 +2,22 @@ import { useNavigate } from 'react-router-dom';
 import  React, {Component, useEffect, useState, ChangeEvent, FormEvent} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
-import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios'; 
+import '../../App.css';
+import axios from 'axios';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faPenSquare, faPlus, faTrash, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';                                                                                         
+import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';                                                                                       
 
-interface Student{
-    id: number;
-    name: string;
-    address: string;
-}
-
-function Update(){
-    const {state} = useLocation();
-    const { id, color } = state;
-    // const {id} = useParams();
+function Create(){
     const [inputData, setInputData] = useState({name: '', address: ''})
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        axios.get('http://localhost:3030/students/'+ id)
-        .then(res => setInputData(res.data))
-    }, [])
-
     const handleSubmit =(event: React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
-        axios.put('http://localhost:3030/students/' + id , inputData)
+        axios.post('http://localhost:3030/students', inputData)
         .then(res =>{
-            alert("Data Update Successfully!");
+            alert("Data Posted  Successfully!");
             navigate('/student');
-        })       
+        })
     }
 
     return(
@@ -44,14 +29,14 @@ function Update(){
                     <div>
                         <label htmlFor="name">Name:</label>
                         <input
-                            type="text" id="name" className='form-control' value={inputData.name}
+                            type="text" id="name" className='form-control'
                             onChange={e => setInputData({...inputData, name: e.target.value})}
                             />
                     </div>
                     <div>
                         <label htmlFor="name">Address:</label>
                         <input
-                            type="text" id="address" className='form-control' value={inputData.address}
+                            type="text" id="address" className='form-control'
                             onChange={e => setInputData({...inputData, address: e.target.value})}
                             />
                     </div><br />
@@ -64,4 +49,4 @@ function Update(){
     )
 }
 
-export default Update
+export default Create

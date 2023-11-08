@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import  React, {Component, useEffect, useState, ChangeEvent, FormEvent} from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
+import '../../App.css';
 import axios from 'axios';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';                                                                                       
