@@ -59,7 +59,7 @@ const account: User = {
       
       navigate('/student');
     } else {
-      setError('Invalid username or password');
+        setError('Invalid username or password');
     }
   };
 

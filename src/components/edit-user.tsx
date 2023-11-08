@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faPenSquare, faPlus, faTrash , faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-const EditAccount: React.FC = () => {
+const EditAccount = () => {
   const {acc, setAcc} = useAcc();
   const [temp, setTemp] = useState<User>(acc);
   
