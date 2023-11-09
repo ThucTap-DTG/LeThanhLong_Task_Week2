@@ -90,8 +90,8 @@ const GetSubject:React.FC = () => {
     setShow(false);
   };
 
-  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    //event.preventDefault();
     try {
       let ngaybdtemp = ngaybd.toString();
       let ngaykttemp = ngaybd.toString();
@@ -109,7 +109,11 @@ const GetSubject:React.FC = () => {
       console.error('Error creating/updating subject:', error);
     }
   }
-
+  const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    const soluong = isNaN(value) ? 0 : value;
+    setSoluong(soluong);
+  };
   //====================================================================================
 return (
     <div className='container list-student' style={{boxShadow: '0 0 10px gray', marginTop: 10, borderRadius:10}}>
@@ -124,7 +128,7 @@ return (
               <Modal.Title>{ten ? 'Edit' : 'Add'} Course</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <Form onSubmit={handleSubmit}>
+                <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Subject name</Form.Label>
                     <Form.Control
@@ -155,7 +159,7 @@ return (
                     <Form.Control
                       type="Text" value={soluong}
                       placeholder="Quantity"
-                      onChange={e => setSoluong(parseInt(e.target.value, 10))}
+                      onChange={handleChangeQuantity}
                     />
                   </Form.Group>
       
@@ -165,7 +169,7 @@ return (
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={handleSubmit}>
                   Save
                 </Button>
               </Modal.Footer>
