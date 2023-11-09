@@ -22,11 +22,11 @@
       "soluong": 50
     },
     {
-      "id": 4,
       "ten": "Công nghệ Java",
-      "ngaybd": "20/05/2021",
-      "ngaykt": "25/08/2021",
-      "soluong": 50
+      "ngaybd": "2023-11-14",
+      "ngaykt": "2023-11-22",
+      "soluong": 50,
+      "id": 4
     }
   ]
 }
