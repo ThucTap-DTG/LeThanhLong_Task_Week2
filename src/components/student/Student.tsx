@@ -6,7 +6,7 @@ import axios from 'axios';
 import { error } from 'console';
 import { title } from 'process';
 import StudentInfo from './StudentInfo';
-import CreateProps from './CreateProps';
+import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 interface Student{
@@ -21,8 +21,11 @@ const GetStudents = () => {
     const [data, setdata] = useState<Student[]>([]);
     //const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
-
-    const [editStudent, seteditStudent] = useState<Student | null>(null);
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [show, setShow] = useState(false);
+    //const [editStudent, seteditStudent] = useState<Student | null>(null);
+    const [selectedSubject, setSelectedSubject] = useState<Student | null>(null);
 
   // useEffect(() => {
   //   fetchData();
@@ -31,22 +34,7 @@ const GetStudents = () => {
   useEffect(() => {
     filterStudents(searchText);
   }, [searchText]);
-//================================GetPost=============================================
 
-  // const fetchData = async () => {
-  //   try{
-  //     // const res = await axios.get('http://localhost:3030/students')
-  //     // .then(res => setdata(res.data));
-  //     const response = await fetch('http://localhost:3030/students');
-  //     const data = await response.json();
-  //     setdata(data);
-  //     setFilteredStudents(data);
-  //   }
-  //   catch(error){
-  //     console.log(error);
-  //   }
-  // };
-  //===================================================================================
   //================================Delete=============================================
   const handleDelete = async(id: number) =>{
     try {
@@ -83,10 +71,36 @@ const GetStudents = () => {
     }
   };
 
-  // useEffect(() => {
-  //   filterStudents();
-  // }, [searchText]);
+  const handleShow = (student: Student | null) => {
+    setSelectedSubject(student);
+    setName(student ? student.name : '');
+    setAddress(student ? student.address : '');  
+    setShow(true);
+  };
 
+  const handleClose = () => {
+    setSelectedSubject(null);
+    setName('');
+    setAddress('');
+    setShow(false);
+  };
+
+  const handleSubmit = async () => {
+    //event.preventDefault();
+    try {
+      if (selectedSubject !== null) {
+        await axios.put(`http://localhost:3030/students/${selectedSubject.id}`,
+         { name, address });
+      } else {
+        // Create new subject
+        await axios.post('http://localhost:3030/students', { name, address });
+      }
+      filterStudents(searchText);
+      handleClose();
+    } catch (error) {
+      console.error('Error creating/updating subject:', error);
+    }
+  }
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchText = event.target.value;
     setSearchText(searchText);
@@ -96,9 +110,46 @@ const GetStudents = () => {
   return (
     <div className='container list-student' style={{boxShadow: '0 0 10px gray', marginTop: 10, borderRadius:10}}>
       <br />
-        {/* <a href="/create" className='btn btn-success'>Add</a> <br /><br /> */}
         <div className='row'>
-            <div className='col-md-2'><CreateProps />  </div>
+        <div className='col-md-2'>
+            <Button variant="primary" onClick={() => setShow(true)}>
+                Create
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+              <Modal.Title>{name ? 'Edit' : 'Add'} Course</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Student name</Form.Label>
+                    <Form.Control
+                      type="Text" value={name}
+                      placeholder="Student name"
+                      autoFocus
+                      onChange={e => setName(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      type="text" value={address}
+                      placeholder="Address"  
+                      onChange={e => setAddress(e.target.value)}            
+                    />
+                  </Form.Group>                       
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                  Save
+                </Button>
+              </Modal.Footer>
+            </Modal>
+              </div>
             <div className='col-md-10'>
             <input type="text" value={searchText}
         onChange={handleSearchInputChange}
@@ -117,7 +168,9 @@ const GetStudents = () => {
       <tbody>
         {data.map((student) => (
            <StudentInfo key={student.id} id = {student.id} name = {student.name} 
-           address = {student.address} onDelete={() => {handleDelete(student.id)}}/>          
+           address = {student.address} 
+           onDelete={() => {handleDelete(student.id)}}
+           onUpdate={() => {handleShow(student)}}/>          
         ))}
       </tbody>
     </table>

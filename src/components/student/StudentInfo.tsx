@@ -9,6 +9,7 @@ interface StudentInfoProps {
   name: string;
   address: string;
   onDelete?: () => void;
+  onUpdate?: () => void;
 }
 
 
@@ -30,8 +31,8 @@ function StudentInfo(student: StudentInfoProps) {
             <button type='submit' onClick={student.onDelete} className='btn btn-danger' style={{marginRight: 5}}>
             <FontAwesomeIcon icon={faTrash} /> 
             </button>
-            <button  onClick={NavUpdate} className='btn btn-info'>
-            <FontAwesomeIcon icon={faPenSquare} /> 
+            <button  onClick={student.onUpdate} className='btn btn-info'>
+                <FontAwesomeIcon icon={faPenSquare} /> 
             </button>
         </td>    
     </tr>
