@@ -10,6 +10,9 @@ import SubjectInfo from './SubjectInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';        
 import { Modal, Form } from 'react-bootstrap';
+import ModalTitle from '../Modals/ModalTitle';
+import ModalBody from '../Modals/ModalBody';
+import ModalFooter from '../Modals/ModalFooter';
 
 
 
@@ -49,7 +52,7 @@ const GetSubject:React.FC = () => {
   //===================================================================================
   const filterSubject = async(searchText: string) => {
           if (searchText.trim() === '') {
-            const response = await fetch('http://localhost:3080/monhoc');
+            const response = await fetch('http://localhost:3030/monhoc');
             const data = await response.json();
             setSubject(data);
         } else {
@@ -74,6 +77,7 @@ const GetSubject:React.FC = () => {
 
   const handleShow = (subject: Subject | null) => {
     setSelectedSubject(subject);
+    setId(subject ? subject.id : id);
     setTen(subject ? subject.ten : '');
     setNgaybd(subject ? subject.ngaybd : '');
     setNgaykt(subject ? subject.ngaykt : '');
@@ -83,6 +87,7 @@ const GetSubject:React.FC = () => {
 
   const handleClose = () => {
     setSelectedSubject(null);
+    setId(0);
     setTen('');
     setNgaybd('');
     setNgaykt('');
@@ -97,11 +102,11 @@ const GetSubject:React.FC = () => {
       let ngaykttemp = ngaybd.toString();
       console.log(ten);
       if (selectedSubject !== null) {
-        await axios.put(`http://localhost:3080/monhoc/${selectedSubject.id}`,
+        await axios.put(`http://localhost:3030/monhoc/${selectedSubject.id}`,
          { ten, ngaybd, ngaykt, soluong });
       } else {
         // Create new subject
-        await axios.post('http://localhost:3080/monhoc', { ten, ngaybd, ngaykt, soluong });
+        await axios.post('http://localhost:3030/monhoc', { ten, ngaybd, ngaykt, soluong });
       }
       filterSubject(searchText);
       handleClose();
@@ -125,9 +130,9 @@ return (
             </Button>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
-              <Modal.Title>{ten ? 'Edit' : 'Add'} Course</Modal.Title>
+              <ModalTitle title = {id ? 'Update Subject' : 'Create Subject'} />
               </Modal.Header>
-              <Modal.Body>
+              <ModalBody>
                 <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Subject name</Form.Label>
@@ -164,17 +169,17 @@ return (
                   </Form.Group>
       
                 </Form>
-              </Modal.Body>
-              <Modal.Footer>
+              </ModalBody>
+              <ModalFooter>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
                 <Button variant="primary" onClick={handleSubmit}>
                   Save
                 </Button>
-              </Modal.Footer>
+              </ModalFooter>
             </Modal>
-              </div>
+            </div>
             <div className='col-md-10'>
             <input type="text" value={searchText}
             onChange={handleSearchInputChange}

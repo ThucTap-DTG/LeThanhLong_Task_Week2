@@ -8,6 +8,9 @@ import { title } from 'process';
 import StudentInfo from './StudentInfo';
 import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import ModalTitle from '../Modals/ModalTitle';
+import ModalBody from '../Modals/ModalBody';
+import ModalFooter from '../Modals/ModalFooter';
 
 interface Student{
     id: number;
@@ -21,6 +24,7 @@ const GetStudents = () => {
     const [data, setdata] = useState<Student[]>([]);
     //const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
+    const [id, setId] = useState(0);
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [show, setShow] = useState(false);
@@ -73,6 +77,7 @@ const GetStudents = () => {
 
   const handleShow = (student: Student | null) => {
     setSelectedSubject(student);
+    setId(student ? student.id: id);
     setName(student ? student.name : '');
     setAddress(student ? student.address : '');  
     setShow(true);
@@ -80,6 +85,7 @@ const GetStudents = () => {
 
   const handleClose = () => {
     setSelectedSubject(null);
+    setId(0);
     setName('');
     setAddress('');
     setShow(false);
@@ -117,10 +123,10 @@ const GetStudents = () => {
             </Button>
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
-              <Modal.Title>{name ? 'Edit' : 'Add'} Course</Modal.Title>
+                  <ModalTitle title = {id ? 'Update Student' : 'Create Student'} />
               </Modal.Header>
-              <Modal.Body>
-                <Form>
+              <ModalBody>
+              <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Student name</Form.Label>
                     <Form.Control
@@ -139,15 +145,15 @@ const GetStudents = () => {
                     />
                   </Form.Group>                       
                 </Form>
-              </Modal.Body>
-              <Modal.Footer>
+              </ModalBody>
+              <ModalFooter>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
                 <Button variant="primary" onClick={handleSubmit}>
                   Save
                 </Button>
-              </Modal.Footer>
+              </ModalFooter>
             </Modal>
               </div>
             <div className='col-md-10'>
