@@ -13,6 +13,7 @@ import { Modal, Form } from 'react-bootstrap';
 import ModalTitle from '../Modals/ModalTitle';
 import ModalBody from '../Modals/ModalBody';
 import ModalFooter from '../Modals/ModalFooter';
+import ModalForm, {} from '../Modals/ModalForm';
 
 
 
@@ -128,12 +129,13 @@ return (
             <Button variant="primary" onClick={() => setShow(true)}>
                 Create
             </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-              <ModalTitle title = {id ? 'Update Subject' : 'Create Subject'} />
-              </Modal.Header>
-              <ModalBody>
-                <Form>
+            <ModalForm
+              show={show}
+              onHide={handleClose}
+              title={id ? 'Update Subject' : 'Create Subject'}
+              onSave={handleSubmit}
+            >
+              <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Subject name</Form.Label>
                     <Form.Control
@@ -169,16 +171,7 @@ return (
                   </Form.Group>
       
                 </Form>
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Save
-                </Button>
-              </ModalFooter>
-            </Modal>
+            </ModalForm>
             </div>
             <div className='col-md-10'>
             <input type="text" value={searchText}

@@ -44,7 +44,7 @@ const GetStudents = () => {
     try {
       await axios.delete(`http://localhost:3030/students/${id}`);
       setdata(data.filter((post) => post.id !== id));
-      alert("Data delete Successfully!")
+      alert("Data delete Successfully!");
     } catch (error) {
       // Xử lý lỗi (nếu có)
       console.log(error);
@@ -121,7 +121,9 @@ const GetStudents = () => {
             <Button variant="primary" onClick={() => setShow(true)}>
                 Create
             </Button>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} 
+            onHide={handleClose}
+            >
               <Modal.Header closeButton>
                   <ModalTitle title = {id ? 'Update Student' : 'Create Student'} />
               </Modal.Header>
