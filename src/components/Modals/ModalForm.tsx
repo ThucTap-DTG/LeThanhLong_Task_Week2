@@ -1,8 +1,5 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import ModalBody from './ModalBody';
-import ModalFooter from './ModalFooter';
-import ModalTitle from './ModalTitle';
 
 type ModalProps = {
   show: boolean;

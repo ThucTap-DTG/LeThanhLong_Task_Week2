@@ -10,9 +10,6 @@ import SubjectInfo from './SubjectInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';        
 import { Modal, Form } from 'react-bootstrap';
-import ModalTitle from '../Modals/ModalTitle';
-import ModalBody from '../Modals/ModalBody';
-import ModalFooter from '../Modals/ModalFooter';
 import ModalForm, {} from '../Modals/ModalForm';
 
 

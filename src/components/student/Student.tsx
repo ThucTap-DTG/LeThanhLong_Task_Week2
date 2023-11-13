@@ -9,9 +9,7 @@ import { title } from 'process';
 import StudentInfo from './StudentInfo';
 import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import ModalTitle from '../Modals/ModalTitle';
-import ModalBody from '../Modals/ModalBody';
-import ModalFooter from '../Modals/ModalFooter';
+import ModalForm from '../Modals/ModalForm';
 
 interface Student{
     id: number;
@@ -139,16 +137,15 @@ const GetStudents = () => {
             <Button variant="primary" onClick={() => setShow(true)}>
                 Create
             </Button>
-            <Modal show={show} 
-            onHide={handleClose}
+            <ModalForm
+              show={show}
+              onHide={handleClose}
+              title={id ? 'Update Subject' : 'Create Subject'}
+              onSave={handleSubmit}             
             >
-              <Modal.Header closeButton>
-                  <ModalTitle title = {id ? 'Update Student' : 'Create Student'} />
-              </Modal.Header>
-              <ModalBody>
               <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Student name</Form.Label>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                       type="Text" value={name}
                       placeholder="Student name"
@@ -160,21 +157,13 @@ const GetStudents = () => {
                     <Form.Label>Address</Form.Label>
                     <Form.Control
                       type="text" value={address}
-                      placeholder="Address"  
-                      onChange={e => setAddress(e.target.value)}            
+                      placeholder="Address"
+                      autoFocus
+                      onChange={e => setAddress(e.target.value)}
                     />
-                  </Form.Group>                       
+                  </Form.Group>                                 
                 </Form>
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleSubmit}>
-                  Save
-                </Button>
-              </ModalFooter>
-            </Modal>
+            </ModalForm>
               </div>
             <div className='col-md-10'>
             <input type="text" value={searchText}
