@@ -133,7 +133,7 @@ return (
               show={show}
               onHide={handleClose}
               title={id ? 'Update Subject' : 'Create Subject'}
-              onSave={handleSubmit}
+              onSave={handleSubmit}             
             >
               <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

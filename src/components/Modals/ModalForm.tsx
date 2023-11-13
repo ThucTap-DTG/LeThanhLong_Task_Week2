@@ -4,15 +4,15 @@ import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalTitle from './ModalTitle';
 
-type Props = {
+type ModalProps = {
   show: boolean;
   onHide: () => void;
-  title: string;
+  title?: string;
   onSave: () => void;
   children: React.ReactNode;
 };
 
-const ModalForm: React.FC<Props> = ({ show, onHide, title, onSave, children }) => {
+const ModalForm: React.FC<ModalProps> = ({ show, onHide, title, onSave, children }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>

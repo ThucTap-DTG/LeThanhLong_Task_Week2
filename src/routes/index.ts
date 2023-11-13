@@ -7,7 +7,7 @@ import GetSubject from '../components/subject/GetSubject';
 
 const publicRoutes = [
     {path: '/', component: LoginForm, layout: null},
-    {path: '/student', component: Student},
+    {path: '/students', component: Student},
     {path: '/edit-user', component: EditAccount},
     {path: '/changepassword', component: ChangePassword},
     {path: '/logout', component: Logout},
