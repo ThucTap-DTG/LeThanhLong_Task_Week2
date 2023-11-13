@@ -1,5 +1,6 @@
 import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext} from 'react';
 import Button from 'react-bootstrap/Button';
+import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
 import axios from 'axios';
@@ -31,14 +32,32 @@ const GetStudents = () => {
     //const [editStudent, seteditStudent] = useState<Student | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<Student | null>(null);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+
+    const [page, setPage] = useState(1);
+    const limit = 8;
 
   useEffect(() => {
     filterStudents(searchText);
-  }, [searchText]);
+  }, [searchText, page]);
 
+  // useEffect(() => {
+  //   fetchStudents();
+  // }, [page]);
+
+  // const fetchStudents = async () => {
+  //   try {
+  //       const response = await fetch(`http://localhost:3030/students?_page=${page}&_limit=${limit}`
+  //     );
+  //     const lst = await response.json();
+  //     setdata(lst);
+  //   } catch (error) {
+  //     console.error("Error fetching students:", error);
+  //   }
+  // };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
   //================================Delete=============================================
   const handleDelete = async(id: number) =>{
     try {
@@ -55,11 +74,10 @@ const GetStudents = () => {
   const filterStudents = async(searchText: string) => {
     if(localStorage.getItem('MatKhau') !== null){
           if (searchText.trim() === '') {
-            const res = await axios.get('http://localhost:3030/students')
-            .then(res => setdata(res.data));
-            const response = await fetch('http://localhost:3030/students');
-            const data = await response.json();
-            setdata(data);
+            const response = await fetch(`http://localhost:3030/students?_page=${page}&_limit=${limit}`);
+            const lst = await response.json();
+            setdata(lst);
+            console.log(data.length);
         } else {
           const filtered = data.filter(
             (student) =>
@@ -183,6 +201,15 @@ const GetStudents = () => {
       </tbody>
     </table>
     <br />
+    <Pagination>
+        <Pagination.Prev
+          disabled={page === 1}
+          onClick={() => handlePageChange(page - 1)}
+        />
+        <Pagination.Item active>{page}</Pagination.Item>
+        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
+      </Pagination>
+      <br />
   </div>
   );
 };
