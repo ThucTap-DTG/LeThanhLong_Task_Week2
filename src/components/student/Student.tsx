@@ -11,6 +11,8 @@ import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ModalForm from '../Modals/ModalForm';
 import CusPagination from '../Pagination/CusPagination';
+import { ShowContext, ShowModalProvider ,useShow} from '../../context/ShowModalContext';
+import { PaginationContext, PaginationProvider , usePagiantion} from '../../context/PaginationContext';
 
 interface Student{
     id: number;
@@ -30,14 +32,15 @@ const GetStudents = () => {
     const [id, setId] = useState(0);
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
-    const [show, setShow] = useState(false);
     //const [editStudent, seteditStudent] = useState<Student | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<Student | null>(null);
 
+    const {show, setShow} = useShow();
+    const {page, setPage, limit, setLimit, totalPage, setTotalPage} = usePagiantion();
 
-    const [page, setPage] = useState(1);
-    const limit = 6;
-    const [totalPage, setTotalPage] = useState(0);
+    // const [page, setPage] = useState(1);
+    // const limit = 6;
+    // const [totalPage, setTotalPage] = useState(0);
 
     useEffect(() => {
       getPageNumber();

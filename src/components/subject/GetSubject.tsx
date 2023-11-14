@@ -13,6 +13,8 @@ import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Form } from 'react-bootstrap';
 import ModalForm from '../Modals/ModalForm';
 import CusPagination from '../Pagination/CusPagination';
+import { ShowContext, ShowModalProvider ,useShow} from '../../context/ShowModalContext';
+import { PaginationContext, PaginationProvider , usePagiantion} from '../../context/PaginationContext';
 
 
 
@@ -21,16 +23,21 @@ const GetSubject:React.FC = () => {
     const [searchText, setSearchText] = useState('');
 
     const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
-    const [show, setShow] = useState(false);
+    //const [show, setShow] = useState(false);
     const [id, setId] = useState(0);
     const [ten, setTen] = useState('');
     const [ngaybd, setNgaybd] = useState('');
     const [ngaykt, setNgaykt] = useState('');
     const [soluong, setSoluong] = useState(0);
 
-    const [page, setPage] = useState(1);
-    const limit = 3;
-    const [totalPage, setTotalPage] = useState(0);
+    //Sử dụng showContext
+    const {show, setShow} = useShow();
+    const {page, setPage, limit, setLimit, totalPage, setTotalPage} = usePagiantion();
+
+    //Phân trang
+    // const [page, setPage] = useState(1);
+    // const limit = 3;
+    // const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     getPageNumber();
@@ -40,6 +47,7 @@ const GetSubject:React.FC = () => {
     filterSubject(searchText);
   }, [searchText, page]);
 
+  //Lấy số trang
   const getPageNumber = async() => {
     try{
       const response = await fetch(`http://localhost:3030/monhoc`);
@@ -54,6 +62,8 @@ const GetSubject:React.FC = () => {
     }
   }
 
+
+  //Xóa
   const handleDelete = async(id: number) =>{
     try {
       await axios.delete(`http://localhost:3080/monhoc/${id}`);
@@ -65,6 +75,7 @@ const GetSubject:React.FC = () => {
     }
   };
 
+  //Cập nhật lại page khi phân trang
   const handleSetPage = (newPage: number) => {
     setPage(newPage);
   };
@@ -88,13 +99,15 @@ const GetSubject:React.FC = () => {
         }
     }
 
-
+  //Event khi search
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchText = event.target.value;
     setSearchText(searchText);
     filterSubject(searchText);
   };
 
+
+  //Show modals khi sửa
   const handleShow = (subject: Subject | null) => {
     setSelectedSubject(subject);
     setId(subject ? subject.id : id);
@@ -105,6 +118,8 @@ const GetSubject:React.FC = () => {
     setShow(true);
   };
 
+
+  //Ẩn modals
   const handleClose = () => {
     setSelectedSubject(null);
     setId(0);
@@ -115,6 +130,7 @@ const GetSubject:React.FC = () => {
     setShow(false);
   };
 
+  //Thêm hoặc sửa dữ liệu
   const handleSubmit = async () => {
     //event.preventDefault();
     try {
@@ -134,6 +150,8 @@ const GetSubject:React.FC = () => {
       console.error('Error creating/updating subject:', error);
     }
   }
+
+  //Event số lượng 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     const soluong = isNaN(value) ? 0 : value;

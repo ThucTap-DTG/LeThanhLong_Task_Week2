@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AccountProvider} from './context/UserContext';
+import {ShowModalProvider} from './context/ShowModalContext';
+import {PaginationProvider} from './context/PaginationContext';
 
 
 //import AppRouter from './AppRouter';
@@ -13,9 +15,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode> 
-    <AccountProvider>
-      <App />  
-    </AccountProvider>      
+    <PaginationProvider>
+      <ShowModalProvider>
+        <AccountProvider>
+          <App />  
+        </AccountProvider>   
+      </ShowModalProvider>   
+    </PaginationProvider>
   </React.StrictMode>
 );
 
