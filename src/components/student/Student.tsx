@@ -10,6 +10,7 @@ import StudentInfo from './StudentInfo';
 import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ModalForm from '../Modals/ModalForm';
+import CusPagination from '../Pagination/CusPagination';
 
 interface Student{
     id: number;
@@ -21,6 +22,9 @@ interface Student{
 const GetStudents = () => {
   const navigate = useNavigate();
     const [data, setdata] = useState<Student[]>([]);
+
+    //const [countRecord, setCountRecord] = useState(0);
+
     //const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
     const [searchText, setSearchText] = useState('');
     const [id, setId] = useState(0);
@@ -32,11 +36,16 @@ const GetStudents = () => {
 
 
     const [page, setPage] = useState(1);
-    const limit = 8;
+    const limit = 6;
+    const [totalPage, setTotalPage] = useState(0);
 
-  useEffect(() => {
-    filterStudents(searchText);
-  }, [searchText, page]);
+    useEffect(() => {
+      getPageNumber();
+    }, [])
+
+    useEffect(() => {
+      filterStudents(searchText);
+    }, [searchText, page]);
 
   // useEffect(() => {
   //   fetchStudents();
@@ -53,7 +62,21 @@ const GetStudents = () => {
   //   }
   // };
 
-  const handlePageChange = (newPage: number) => {
+  const getPageNumber = async() => {
+    try{
+      const response = await fetch(`http://localhost:3030/students`);
+      const lst = await response.json();
+      const countRecord = lst.length;
+      const temp = Math.ceil(Number(countRecord) / limit);
+      setTotalPage(temp);
+    }
+    catch(error)
+    {
+      console.log(error);
+    }
+  }
+
+  const handleSetPage = (newPage: number) => {
     setPage(newPage);
   };
   //================================Delete=============================================
@@ -190,15 +213,12 @@ const GetStudents = () => {
       </tbody>
     </table>
     <br />
-    <Pagination>
-        <Pagination.Prev
-          disabled={page === 1}
-          onClick={() => handlePageChange(page - 1)}
+        <CusPagination 
+            page={page}
+            handlePageChange={handleSetPage}
+            totalPage={totalPage}
         />
-        <Pagination.Item active>{page}</Pagination.Item>
-        <Pagination.Next onClick={() => handlePageChange(page + 1)} />
-      </Pagination>
-      <br />
+    <br />
   </div>
   );
 };

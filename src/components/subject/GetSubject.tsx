@@ -1,5 +1,6 @@
 import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext} from 'react';
 import Button from 'react-bootstrap/Button';
+import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { error } from 'console';
@@ -10,7 +11,8 @@ import SubjectInfo from './SubjectInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';        
 import { Modal, Form } from 'react-bootstrap';
-import ModalForm, {} from '../Modals/ModalForm';
+import ModalForm from '../Modals/ModalForm';
+import CusPagination from '../Pagination/CusPagination';
 
 
 
@@ -26,10 +28,31 @@ const GetSubject:React.FC = () => {
     const [ngaykt, setNgaykt] = useState('');
     const [soluong, setSoluong] = useState(0);
 
+    const [page, setPage] = useState(1);
+    const limit = 3;
+    const [totalPage, setTotalPage] = useState(0);
+
+  useEffect(() => {
+    getPageNumber();
+  }, [])
+
   useEffect(() => {
     filterSubject(searchText);
-  }, [searchText]);
+  }, [searchText, page]);
 
+  const getPageNumber = async() => {
+    try{
+      const response = await fetch(`http://localhost:3030/monhoc`);
+      const lst = await response.json();
+      const countRecord = lst.length;
+      const temp = Math.ceil(Number(countRecord) / limit);
+      setTotalPage(temp);
+    }
+    catch(error)
+    {
+      console.log(error);
+    }
+  }
 
   const handleDelete = async(id: number) =>{
     try {
@@ -42,15 +65,14 @@ const GetSubject:React.FC = () => {
     }
   };
 
-
-  const handleUpdate = async(id: number) => {
-    
-  }
+  const handleSetPage = (newPage: number) => {
+    setPage(newPage);
+  };
 
   //===================================================================================
   const filterSubject = async(searchText: string) => {
           if (searchText.trim() === '') {
-            const response = await fetch('http://localhost:3030/monhoc');
+            const response = await fetch(`http://localhost:3030/monhoc?_page=${page}&_limit=${limit}`);
             const data = await response.json();
             setSubject(data);
         } else {
@@ -199,7 +221,12 @@ return (
       </tbody>
     </table>
     <br />
-
+    <CusPagination 
+        page={page}
+        handlePageChange={handleSetPage}
+        totalPage={totalPage}
+        />  
+      <br />  
   </div>
   );
 };

@@ -26,7 +26,7 @@ export function LoginForm() {
     try {
       const status = await localStorage.getItem("MatKhau");
       if (status) {
-        navigate('/student');
+        navigate('/students');
       }
     } catch (error) {
       console.error("Lỗi: ", error);

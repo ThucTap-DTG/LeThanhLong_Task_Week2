@@ -136,6 +136,76 @@
       "ngaykt": "2024-02-01",
       "soluong": 50,
       "id": 5
+    },
+    {
+      "ten": "Cấu trúc dữ liệu và giải thuật",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 6
+    },
+    {
+      "ten": "Cấu trúc rời rạc",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 7
+    },
+    {
+      "ten": "Thực hành cấu trúc rời rạc",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 8
+    },
+    {
+      "ten": "Bảo mật hệ thống thông tin",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 9
+    },
+    {
+      "ten": "Cơ sở dữ liệu Nosql",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 10
+    },
+    {
+      "ten": "Cơ sở dữ liệu nâng cao",
+      "ngaybd": "2023-12-10",
+      "ngaykt": "2024-02-01",
+      "soluong": 50,
+      "id": 11
+    },
+    {
+      "id": 12,
+      "ten": "Kiến trúc máy tính",
+      "ngaybd": "15/10/2022",
+      "ngaykt": "15/12/2022",
+      "soluong": 50
+    },
+    {
+      "id": 13,
+      "ten": "Hệ điều hành",
+      "ngaybd": "02/10/2022",
+      "ngaykt": "02/01/2023",
+      "soluong": 50
+    },
+    {
+      "id": 14,
+      "ten": "Mạng máy tính",
+      "ngaybd": "20/05/2021",
+      "ngaykt": "25/08/2021",
+      "soluong": 50
+    },
+    {
+      "ten": "Mật mã học",
+      "ngaybd": "2023-11-14",
+      "ngaykt": "2023-11-22",
+      "soluong": 100,
+      "id": 15
     }
   ]
 }

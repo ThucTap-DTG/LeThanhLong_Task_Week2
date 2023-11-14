@@ -25,7 +25,7 @@ const Navbar = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>     
                     <Dropdown.Item>
-                    <Link to="/student" style={{textDecoration: 'none', color: 'black'}}>
+                    <Link to="/students" style={{textDecoration: 'none', color: 'black'}}>
                     <FontAwesomeIcon icon={faGraduationCap} /> Students
                     </Link>                                  
                     </Dropdown.Item>
