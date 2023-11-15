@@ -23,7 +23,7 @@ export const PaginationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
   };
   
-  export const usePagiantion =() => {
+  export const usePagination =() => {
       const context = useContext(PaginationContext);
       return context;
   }

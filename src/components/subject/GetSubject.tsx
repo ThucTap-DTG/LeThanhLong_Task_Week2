@@ -14,7 +14,7 @@ import { Modal, Form } from 'react-bootstrap';
 import ModalForm from '../Modals/ModalForm';
 import CusPagination from '../Pagination/CusPagination';
 import { ShowContext, ShowModalProvider ,useShow} from '../../context/ShowModalContext';
-import { PaginationContext, PaginationProvider , usePagiantion} from '../../context/PaginationContext';
+import { PaginationContext, PaginationProvider , usePagination } from '../../context/PaginationContext';
 
 
 
@@ -32,7 +32,7 @@ const GetSubject:React.FC = () => {
 
     //Sử dụng showContext
     const {show, setShow} = useShow();
-    const {page, setPage, limit, setLimit, totalPage, setTotalPage} = usePagiantion();
+    const {page, setPage, limit, setLimit, totalPage, setTotalPage} = usePagination();
 
     //Phân trang
     // const [page, setPage] = useState(1);
