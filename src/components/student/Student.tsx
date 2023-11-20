@@ -1,4 +1,4 @@
-import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext} from 'react';
+import  React, {Component, useEffect, useState, ChangeEvent, FormEvent, createContext, useMemo} from 'react';
 import Button from 'react-bootstrap/Button';
 import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,12 +13,7 @@ import ModalForm from '../Modals/ModalForm';
 import CusPagination from '../Pagination/CusPagination';
 import { ShowContext, ShowModalProvider ,useShow} from '../../context/ShowModalContext';
 import { PaginationContext, PaginationProvider , usePagination } from '../../context/PaginationContext';
-
-interface Student{
-    id: number;
-    name: string;
-    address: string;
-}
+import {Student} from '../../type/Student';
 
 
 const GetStudents = () => {
@@ -35,6 +30,8 @@ const GetStudents = () => {
     //const [editStudent, seteditStudent] = useState<Student | null>(null);
     const [selectedSubject, setSelectedSubject] = useState<Student | null>(null);
 
+    //const [kiemTra, setKiemTra] = useState(false);
+
     const {show, setShow} = useShow();
     const {page, setPage, limit, setLimit, totalPage, setTotalPage} = usePagination();
 
@@ -46,6 +43,23 @@ const GetStudents = () => {
       getPageNumber();
     }, [])
 
+    
+        const getPageNumber = async () => {
+          try{
+            const response = await fetch(`http://localhost:3030/students`);
+            const lst = await response.json();
+            const countRecord = lst.length;
+            const temp = Math.ceil(Number(countRecord) / limit);
+            setTotalPage(temp);
+            //return totalPage;
+          }
+          catch(error)
+          {
+            console.log(error);
+          }
+        }
+
+    
 
     useEffect(() => {
       filterStudents(searchText);
@@ -66,19 +80,21 @@ const GetStudents = () => {
   //   }
   // };
 
-  const getPageNumber = async() => {
-    try{
-      const response = await fetch(`http://localhost:3030/students`);
-      const lst = await response.json();
-      const countRecord = lst.length;
-      const temp = Math.ceil(Number(countRecord) / limit);
-      setTotalPage(temp);
-    }
-    catch(error)
-    {
-      console.log(error);
-    }
-  }
+  
+
+  // const getPageNumber = async () => {
+  //   try{
+  //     const response = await fetch(`http://localhost:3030/students`);
+  //     const lst = await response.json();
+  //     const countRecord = lst.length;
+  //     const temp = Math.ceil(Number(countRecord) / limit);
+  //     setTotalPage(temp);
+  //   }
+  //   catch(error)
+  //   {
+  //     console.log(error);
+  //   }
+  // }
 
   const handleSetPage = (newPage: number) => {
     setPage(newPage);
@@ -88,6 +104,7 @@ const GetStudents = () => {
     try {
       await axios.delete(`http://localhost:3030/students/${id}`);
       setdata(data.filter((post) => post.id !== id));
+      //setKiemTra(true);
       alert("Data delete Successfully!");
     } catch (error) {
       // Xử lý lỗi (nếu có)
@@ -102,7 +119,6 @@ const GetStudents = () => {
             const response = await fetch(`http://localhost:3030/students?_page=${page}&_limit=${limit}`);
             const lst = await response.json();
             setdata(lst);
-            console.log(data.length);
         } else {
           const filtered = data.filter(
             (student) =>
@@ -143,6 +159,7 @@ const GetStudents = () => {
       } else {
         // Create new subject
         await axios.post('http://localhost:3030/students', { name, address });
+        //setKiemTra(true);
       }
       filterStudents(searchText);
       handleClose();
@@ -167,7 +184,7 @@ const GetStudents = () => {
             <ModalForm
               show={show}
               onHide={handleClose}
-              title={id ? 'Update Subject' : 'Create Subject'}
+              title={id ? 'Update Student' : 'Create Student'}
               onSave={handleSubmit}             
             >
               <Form>

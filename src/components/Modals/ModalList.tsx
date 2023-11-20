@@ -9,7 +9,7 @@ type ModalProps = {
   children: React.ReactNode;
 };
 
-const ModalForm: React.FC<ModalProps> = ({
+const ModalList: React.FC<ModalProps> = ({
   show,
   onHide,
   title,
@@ -27,11 +27,11 @@ const ModalForm: React.FC<ModalProps> = ({
           Close
         </Button>
         <Button variant="primary" onClick={onSave}>
-          Save
+          Add
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default ModalForm;
+export default ModalList;

@@ -67,11 +67,6 @@ body {
     background-color: #45a049;
   }
 
-
-
-
-/* LoginForm.css */
-
 .login-form {
   max-width: 500px;
   margin: 0 auto;
@@ -108,3 +103,5 @@ input {
   border-radius: 3px;
   cursor: pointer;
 }
+
+
