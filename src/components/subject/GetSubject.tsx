@@ -36,6 +36,7 @@ import {
 } from "../../context/PaginationContext";
 import StudentInfo from "../student/StudentInfo";
 
+
 const GetSubject: React.FC = () => {
   const [subject, setSubject] = useState<Subject[]>([]);
   const [student, setStudent] = useState<Student[]>([]);
@@ -76,6 +77,8 @@ const GetSubject: React.FC = () => {
   // const [totalPage, setTotalPage] = useState(0);
 
   const [typeModal, setTypeModal] = useState<number>(0);
+
+  const [listIDStudent, setListIDStudent] = useState<number[]>([]);
 
   useEffect(() => {
     getPageNumber();
@@ -252,9 +255,18 @@ const GetSubject: React.FC = () => {
   };
   const SelectStudent = (IDStudent: number) => {
       setStudentID(IDStudent);
-      setColor("red");
+
+      if (listIDStudent.includes(IDStudent)) {
+        // Nếu id đã được chọn trước đó, loại bỏ id khỏi mảng selectedIds
+        setListIDStudent(listIDStudent.filter((selectedId) => selectedId !== IDStudent));
+      } else {
+        // Nếu id chưa được chọn trước đó, thêm id vào mảng selectedIds
+        setListIDStudent([...listIDStudent, IDStudent]);
+      }   
+      console.log(listIDStudent);
   }
   const addStudent = async () => {
+    //console.log(listIDStudent);
     const filteredRows = sinhvien_monhoc.filter(
       (item) => item.monhoc_id === subjectID
     );
@@ -267,11 +279,12 @@ const GetSubject: React.FC = () => {
     }
     else{
       const monhoc_id = subjectID;
-      const sinhvien_id = studentID;
-      //console.log(subjectID, studentID);
-      await axios.post("http://localhost:3030/monhoc_sinhvien", {
-        monhoc_id, sinhvien_id
-      });
+      const sinhvien_id = listIDStudent;
+      for(const item of sinhvien_id){
+        await axios.post("http://localhost:3030/monhoc_sinhvien", {
+          monhoc_id, sinhvien_id: item
+        });
+      }
       setCheckAddStudent(true);
       //alert("Add students to the course successfully !");
       setShow(false);
@@ -360,7 +373,9 @@ const GetSubject: React.FC = () => {
                     //   <StudentInfo key={student.id} id = {student.id} name = {student.name} 
                     //   address = {student.address} 
                     //  /> 
-                      <tr key={temp.id} onClick={() => SelectStudent(temp.id)}>
+                      <tr key={temp.id} 
+                      onClick={() => SelectStudent(temp.id)}
+                      className={listIDStudent.includes(temp.id) ? 'table-info': ''}>
                         <td>{temp.id}</td>
                         <td>{temp.name}</td>
                         <td>{temp.address}</td>

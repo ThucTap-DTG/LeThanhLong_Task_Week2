@@ -115,22 +115,22 @@
     {
       "id": 1,
       "ten": "Cơ sở dữ liệu",
-      "ngaybd": "15/10/2022",
-      "ngaykt": "15/12/2022",
+      "ngaybd": "15-10-2022",
+      "ngaykt": "15-12-2022",
       "soluong": 50
     },
     {
       "id": 2,
       "ten": "Lập trình OOP",
-      "ngaybd": "02/10/2022",
-      "ngaykt": "02/01/2023",
+      "ngaybd": "02-10-2022",
+      "ngaykt": "02-01-2023",
       "soluong": 50
     },
     {
       "id": 3,
       "ten": "Công nghệ .NET",
-      "ngaybd": "20/05/2021",
-      "ngaykt": "20/08/2021",
+      "ngaybd": "20-05-2021",
+      "ngaykt": "20-08-2021",
       "soluong": 3
     },
     {
@@ -192,22 +192,22 @@
     {
       "id": 12,
       "ten": "Kiến trúc máy tính",
-      "ngaybd": "15/10/2022",
-      "ngaykt": "15/12/2022",
+      "ngaybd": "15-10-2022",
+      "ngaykt": "15-12-2022",
       "soluong": 50
     },
     {
       "id": 13,
       "ten": "Hệ điều hành",
-      "ngaybd": "02/10/2022",
-      "ngaykt": "02/01/2023",
+      "ngaybd": "02-10-2022",
+      "ngaykt": "02-01-2023",
       "soluong": 50
     },
     {
       "id": 14,
       "ten": "Mạng máy tính",
-      "ngaybd": "20/05/2021",
-      "ngaykt": "25/08/2021",
+      "ngaybd": "20-05-2021",
+      "ngaykt": "25-08-2021",
       "soluong": 50
     },
     {
@@ -330,6 +330,26 @@
       "monhoc_id": 4,
       "sinhvien_id": 7,
       "id": 21
+    },
+    {
+      "monhoc_id": 1,
+      "sinhvien_id": 8,
+      "id": 22
+    },
+    {
+      "monhoc_id": 2,
+      "sinhvien_id": 12,
+      "id": 23
+    },
+    {
+      "monhoc_id": 7,
+      "sinhvien_id": 1,
+      "id": 24
+    },
+    {
+      "monhoc_id": 7,
+      "sinhvien_id": 15,
+      "id": 25
     }
   ]
 }
