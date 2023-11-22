@@ -114,9 +114,9 @@
   "monhoc": [
     {
       "id": 1,
-      "ten": "Cơ sở dữ liệu",
-      "ngaybd": "15-10-2022",
-      "ngaykt": "15-12-2022",
+      "ten": "Kỹ năng mềm",
+      "ngaybd": "02-10-2022",
+      "ngaykt": "02-01-2023",
       "soluong": 50
     },
     {
@@ -206,8 +206,8 @@
     {
       "id": 14,
       "ten": "Mạng máy tính",
-      "ngaybd": "20-05-2021",
-      "ngaykt": "25-08-2021",
+      "ngaybd": "02-10-2022",
+      "ngaykt": "02-01-2023",
       "soluong": 50
     },
     {
@@ -220,9 +220,16 @@
     {
       "ten": "Hệ quản trị Cơ sở dữ liệu",
       "ngaybd": "2020-02-01",
-      "ngaykt": "2022-02-01",
+      "ngaykt": "2020-05-01",
       "soluong": 30,
       "id": 16
+    },
+    {
+      "ten": "Kinh tế chính trị Mac-LeNin",
+      "ngaybd": "2020-02-01",
+      "ngaykt": "2020-05-01",
+      "soluong": 30,
+      "id": 17
     }
   ],
   "monhoc_sinhvien": [
@@ -350,6 +357,41 @@
       "monhoc_id": 7,
       "sinhvien_id": 15,
       "id": 25
+    },
+    {
+      "monhoc_id": 16,
+      "sinhvien_id": 1,
+      "id": 26
+    },
+    {
+      "monhoc_id": 16,
+      "sinhvien_id": 2,
+      "id": 27
+    },
+    {
+      "monhoc_id": 17,
+      "sinhvien_id": 3,
+      "id": 28
+    },
+    {
+      "monhoc_id": 17,
+      "sinhvien_id": 6,
+      "id": 29
+    },
+    {
+      "monhoc_id": 13,
+      "sinhvien_id": 1,
+      "id": 30
+    },
+    {
+      "monhoc_id": 14,
+      "sinhvien_id": 10,
+      "id": 31
+    },
+    {
+      "monhoc_id": 8,
+      "sinhvien_id": 4,
+      "id": 32
     }
   ]
 }

@@ -5,7 +5,7 @@ import React, {
   ChangeEvent,
   FormEvent,
   createContext,
-  useRef
+  useRef,
 } from "react";
 import Button from "react-bootstrap/Button";
 import Pagination from "react-bootstrap/Pagination";
@@ -35,7 +35,7 @@ import {
   usePagination,
 } from "../../context/PaginationContext";
 import StudentInfo from "../student/StudentInfo";
-
+import moment from 'moment';
 
 const GetSubject: React.FC = () => {
   const [subject, setSubject] = useState<Subject[]>([]);
@@ -61,7 +61,6 @@ const GetSubject: React.FC = () => {
 
   const SLSinhVien = useRef(0);
 
-
   const [color, setColor] = useState("");
   const [checkAddStudent, setCheckAddStudent] = useState(false);
 
@@ -69,7 +68,8 @@ const GetSubject: React.FC = () => {
 
   //Sử dụng showContext
   const { show, setShow } = useShow();
-  const { page, setPage, limit, setLimit, totalPage, setTotalPage } = usePagination();
+  const { page, setPage, limit, setLimit, totalPage, setTotalPage } =
+    usePagination();
 
   //Phân trang
   // const [page, setPage] = useState(1);
@@ -79,6 +79,7 @@ const GetSubject: React.FC = () => {
   const [typeModal, setTypeModal] = useState<number>(0);
 
   const [listIDStudent, setListIDStudent] = useState<number[]>([]);
+  const [monhoc_duocchon, setMonHocDuocChon] = useState<Subject>();
 
   useEffect(() => {
     getPageNumber();
@@ -196,7 +197,7 @@ const GetSubject: React.FC = () => {
     setShow(true);
     setTitleModal("Create Subject");
     setTypeModal(2);
-  }
+  };
 
   //Thêm hoặc sửa dữ liệu
   const handleSubmit = async () => {
@@ -230,8 +231,9 @@ const GetSubject: React.FC = () => {
 
   const showDanhSachSinhVien = (subject: Subject) => {
     setSubjectID(subject.id);
+    setMonHocDuocChon(subject);
     setTitleModal("Danh sách sinh viên");
-    SLSinhVien.current = (subject.soluong);
+    SLSinhVien.current = subject.soluong;
     //console.log(SLSinhVien.current);
     setShow(true);
     setTypeModal(1);
@@ -240,9 +242,10 @@ const GetSubject: React.FC = () => {
       .map((registration) => registration.sinhvien_id);
 
     const temp = student.filter((student) =>
-    IDStudentRegister.every((id) => id !== student.id));
-    setStudentFilter(temp);  
-  }
+      IDStudentRegister.every((id) => id !== student.id)
+    );
+    setStudentFilter(temp);
+  };
   //Event số lượng
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -254,42 +257,80 @@ const GetSubject: React.FC = () => {
     setSubjectID(subjectID);
   };
   const SelectStudent = (IDStudent: number) => {
-      setStudentID(IDStudent);
+    setStudentID(IDStudent);
 
-      if (listIDStudent.includes(IDStudent)) {
-        // Nếu id đã được chọn trước đó, loại bỏ id khỏi mảng selectedIds
-        setListIDStudent(listIDStudent.filter((selectedId) => selectedId !== IDStudent));
-      } else {
-        // Nếu id chưa được chọn trước đó, thêm id vào mảng selectedIds
-        setListIDStudent([...listIDStudent, IDStudent]);
-      }   
-      console.log(listIDStudent);
-  }
+    if (listIDStudent.includes(IDStudent)) {
+      // Nếu id đã được chọn trước đó, loại bỏ id khỏi mảng selectedIds
+      setListIDStudent(
+        listIDStudent.filter((selectedId) => selectedId !== IDStudent)
+      );
+    } else {
+      // Nếu id chưa được chọn trước đó, thêm id vào mảng selectedIds
+      setListIDStudent([...listIDStudent, IDStudent]);
+    }
+    console.log(listIDStudent);
+  };
   const addStudent = async () => {
-    //console.log(listIDStudent);
+    const result = await CheckDate();
     const filteredRows = sinhvien_monhoc.filter(
       (item) => item.monhoc_id === subjectID
     );
-    // console.log("ID mon hoc: " + subjectID)
 
-    // console.log("So sinh vien theo mon hoc" + filteredRows.length);  
-    if(filteredRows.length + 1 > SLSinhVien.current){
+    if (filteredRows.length + 1 > SLSinhVien.current) {
       alert("Số lượng sinh viên đã đủ");
       setShow(false);
     }
-    else{
+    if(result === false){
+      alert("Trùng thời gian với môn học đã đăng ký");
+      setShow(false);
+    }   
+    else {
+      console.log("Gia trị: " + result);
       const monhoc_id = subjectID;
       const sinhvien_id = listIDStudent;
-      for(const item of sinhvien_id){
+      for (const item of sinhvien_id) {
         await axios.post("http://localhost:3030/monhoc_sinhvien", {
-          monhoc_id, sinhvien_id: item
+          monhoc_id,
+          sinhvien_id: item,
         });
       }
       setCheckAddStudent(true);
-      //alert("Add students to the course successfully !");
       setShow(false);
     }
+  };
+
+  // const [sv_mh, setSv_Mh] = useState<Sinhvien_Monhoc[]>([]);
+  // const [mh, setMh] = useState<Subject>();
+  const dateFormat = 'DD-MM-YYYY';
+  //const [ktTrungLap, setKtTrungLap] = useState(true);
+
+  const CheckDate =  async () => {  
+    
+    let kiemtra = false;
+    for(const item of listIDStudent){
+        const response = await fetch(`http://localhost:3030/monhoc_sinhvien?sinhvien_id=${item}`);
+        const sv_mh = await response.json() as Sinhvien_Monhoc[];
+        if(sv_mh.length > 0){
+          for(const item1 of sv_mh){
+            const response1 = await fetch(`http://localhost:3030/monhoc?id=${item1.monhoc_id}`);
+            const mhlist = await response1.json() as Subject[];
+            const mh = mhlist[0];
+              if(moment(monhoc_duocchon?.ngaykt, dateFormat).toDate() < (moment(mh?.ngaybd, dateFormat).toDate())
+              || moment(monhoc_duocchon?.ngaybd, dateFormat).toDate() > (moment(mh?.ngaykt, dateFormat).toDate())
+              )
+              {
+                kiemtra = true;
+              }
+              else{
+                kiemtra = false;
+                break;
+              }
+          }
+        }
+      }
+    return kiemtra;
   }
+
   //====================================================================================
   return (
     <div
@@ -308,82 +349,87 @@ const GetSubject: React.FC = () => {
             title={titleModal}
             onSave={typeModal !== 1 ? handleSubmit : addStudent}
           >
-            {typeModal !== 1 ?
-            <Form>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Subject name</Form.Label>
-                <Form.Control
-                  type="Text"
-                  value={ten}
-                  placeholder="Subject name"
-                  autoFocus
-                  onChange={(e) => setTen(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Start day</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={ngaybd}
-                  placeholder="Start day"
-                  onChange={(e) => setNgaybd(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>End day</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={ngaykt}
-                  placeholder="End day"
-                  onChange={(e) => setNgaykt(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control
-                  type="Text"
-                  value={soluong}
-                  placeholder="Quantity"
-                  onChange={handleChangeQuantity}
-                />
-              </Form.Group>
-            </Form> : 
-                <table className='table'>
+            {typeModal !== 1 ? (
+              <Form>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>Subject name</Form.Label>
+                  <Form.Control
+                    type="Text"
+                    value={ten}
+                    placeholder="Subject name"
+                    autoFocus
+                    onChange={(e) => setTen(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>Start day</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={ngaybd}
+                    placeholder="Start day"
+                    onChange={(e) => setNgaybd(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>End day</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={ngaykt}
+                    placeholder="End day"
+                    onChange={(e) => setNgaykt(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>Quantity</Form.Label>
+                  <Form.Control
+                    type="Text"
+                    value={soluong}
+                    placeholder="Quantity"
+                    onChange={handleChangeQuantity}
+                  />
+                </Form.Group>
+              </Form>
+            ) : (
+              <table className="table">
                 <thead>
-                  <tr>      
+                  <tr>
                     <th>MSSV</th>
                     <th>Họ và Tên</th>
                     <th>Đại chỉ</th>
                   </tr>
-                </thead>  
+                </thead>
                 <tbody>
                   {studentFilter.map((temp) => (
-                    //   <StudentInfo key={student.id} id = {student.id} name = {student.name} 
-                    //   address = {student.address} 
-                    //  /> 
-                      <tr key={temp.id} 
+                    //   <StudentInfo key={student.id} id = {student.id} name = {student.name}
+                    //   address = {student.address}
+                    //  />
+                    <tr
+                      key={temp.id}
                       onClick={() => SelectStudent(temp.id)}
-                      className={listIDStudent.includes(temp.id) ? 'table-info': ''}>
-                        <td>{temp.id}</td>
-                        <td>{temp.name}</td>
-                        <td>{temp.address}</td>
-                      </tr>
+                      className={
+                        listIDStudent.includes(temp.id) ? "table-info" : ""
+                      }
+                    >
+                      <td>{temp.id}</td>
+                      <td>{temp.name}</td>
+                      <td>{temp.address}</td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
-            }
+            )}
           </ModalForm>
         </div>
         <div className="col-md-10">
@@ -457,7 +503,7 @@ const GetSubject: React.FC = () => {
                       );
                       if (studentTemp) {
                         return (
-                          <tr>
+                          <tr key={studentTemp.id}>
                             <td>{studentTemp.id}</td>
                             <td>{studentTemp.name}</td>
                             <td>{studentTemp.address}</td>
