@@ -392,6 +392,16 @@
       "monhoc_id": 8,
       "sinhvien_id": 4,
       "id": 32
+    },
+    {
+      "monhoc_id": 3,
+      "sinhvien_id": 4,
+      "id": 33
+    },
+    {
+      "monhoc_id": 13,
+      "sinhvien_id": 18,
+      "id": 34
     }
   ]
 }

@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginForm from './components/users/LoginForm';
 import Student from './components/student/Student';
-import { BrowserRouter as Router, Route, BrowserRouter, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router,Route, BrowserRouter,Routes, Link } from 'react-router-dom';
 import EditAccount from './components/users/edit-user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faPenSquare, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';

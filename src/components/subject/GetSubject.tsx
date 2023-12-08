@@ -5,7 +5,7 @@ import React, {
   ChangeEvent,
   FormEvent,
   createContext,
-  useRef,
+  useRef, useMemo
 } from "react";
 import Button from "react-bootstrap/Button";
 import Pagination from "react-bootstrap/Pagination";
@@ -85,6 +85,7 @@ const GetSubject: React.FC = () => {
     getPageNumber();
   }, []);
 
+
   useEffect(() => {
     fetchSinhvien_Monhoc();
   }, [checkAddStudent]);
@@ -108,6 +109,7 @@ const GetSubject: React.FC = () => {
     }
   };
 
+
   //Xóa
   const handleDelete = async (id: number) => {
     try {
@@ -126,9 +128,12 @@ const GetSubject: React.FC = () => {
   };
 
   const fetchStudent = async () => {
-    const response = await fetch(`http://localhost:3030/students`);
-    const data = await response.json();
-    setStudent(data);
+    try {
+      const response = await axios.get('http://localhost:3030/students');
+      setStudent(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchSinhvien_Monhoc = async () => {
@@ -192,6 +197,7 @@ const GetSubject: React.FC = () => {
     setNgaykt("");
     setSoluong(0);
     setShow(false);
+    setListIDStudent([]);
   };
   const handleCreate = () => {
     setShow(true);
@@ -285,7 +291,6 @@ const GetSubject: React.FC = () => {
       setShow(false);
     }   
     else {
-      console.log("Gia trị: " + result);
       const monhoc_id = subjectID;
       const sinhvien_id = listIDStudent;
       for (const item of sinhvien_id) {
@@ -305,8 +310,7 @@ const GetSubject: React.FC = () => {
   //const [ktTrungLap, setKtTrungLap] = useState(true);
 
   const CheckDate =  async () => {  
-    
-    let kiemtra = false;
+    let kiemtra = false; 
     for(const item of listIDStudent){
         const response = await fetch(`http://localhost:3030/monhoc_sinhvien?sinhvien_id=${item}`);
         const sv_mh = await response.json() as Sinhvien_Monhoc[];
